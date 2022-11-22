@@ -103,7 +103,7 @@ main {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0 15px 0 30px;
+  padding: 0 13px 0 30px;
   height: 30px;
   /* background-color: blue; */
   border-top-left-radius: 40px;
@@ -113,7 +113,7 @@ main {
 
 .top-bar span {
   display: flex;
-  width: 65px;
+  width: 68px;
   align-items: center;
   justify-content: space-between;
 }
@@ -123,7 +123,7 @@ main {
 }
 
 .top-bar img:first-child {
-  width: 13px;
+  width: 20px;
 }
 
 .top-bar img:last-child {
