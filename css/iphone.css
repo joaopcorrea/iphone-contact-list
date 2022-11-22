@@ -103,7 +103,7 @@ main {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0 13px 0 30px;
+  padding: 0 15px 0 30px;
   height: 30px;
   /* background-color: blue; */
   border-top-left-radius: 40px;
@@ -113,21 +113,21 @@ main {
 
 .top-bar span {
   display: flex;
-  width: 68px;
+  width: 63px;
   align-items: center;
   justify-content: space-between;
 }
 
-.top-bar img {
-  width: 17px;
+.top-bar img.signal {
+  width: 16px;
 }
 
-.top-bar img:first-child {
-  width: 20px;
+.top-bar img.wifi {
+  width: 15px;
 }
 
-.top-bar img:last-child {
-  width: 25px;
+.top-bar img.battery {
+  width: 23px;
 }
 
 main {
