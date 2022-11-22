@@ -39,6 +39,19 @@
   font-weight: 400;
 }
 
+.container input {
+  border: none;
+  font-size: 1em;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  width: 100%
+}
+
+.container input:focus {
+  outline: none;
+  border-bottom: 1px solid #007aff;
+}
+
 .profile {
   display: flex;
   flex-direction: column;
@@ -107,7 +120,8 @@
   margin-bottom: 5px;
 }
 
-.phone-list .phone {
+.phone-list .phone input,
+.email input {
   color: #007aff;
   font-size: 1em;
 }
@@ -140,6 +154,20 @@
 
 .notes {
   margin-bottom: 50px;
+}
+
+.notes textarea {
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  border: 0;
+  padding: 0;
+  resize: none;
+}
+
+.notes textarea:focus {
+  border: 1px solid #007aff;
+  border-radius: 5px;
+  outline: none;
 }
 
 .blue-text {

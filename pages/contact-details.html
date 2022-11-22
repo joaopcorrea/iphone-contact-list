@@ -48,37 +48,47 @@
           <div class="icon"><img src="../icons/dollar.svg"> pagamento</div>
         </section>
         <section class="phone-list">
-          <div class="phone"><span>celular</span>(15) 99302-5531</div>
-          <div class="phone"><span>casa</span>(15) 99302-5531</div>
+          <div class="phone">
+            <span>celular</span>
+            <input id="cont-det-phone1" type="text" value="(15) 99302-5531" placeholder="(xx) xxxxx-xxxx" onblur="setId(this.id)">
+          </div>
+          <div class="phone">
+            <span>casa</span>
+            <input id="cont-det-phone2" type="text" value="(15) 99302-5531" placeholder="(xx) xxxxx-xxxx" onblur="setId(this.id)">
+          </div>
         </section>
         <section class="email blue-text">
           <span>e-mail</span>
-          joaopedrocorrea21@gmail.com
+          <input id="cont-det-email" type="text" value="joaopedrocorrea21@gmail.com" placeholder="email@email.com" onblur="setId(this.id)">
         </section>
         <section class="address">
           <div class="info">
-            <span class="street">Samuel Steinberg 144</span>
-            <span class="city">Sorocaba</span>
-            <span class="state">São Paulo</span>
-            <span class="zipcode">18053-363</span>
-            <span class="country">Brasil</span>
+            <span class="street">
+              <input id="cont-det-street" type="text" value="Samuel Steinberg 144" placeholder="Logradouro" onblur="setId(this.id)">
+            </span>
+            <span class="city">
+              <input id="cont-det-city" type="text" value="Sorocaba" placeholder="Cidade" onblur="setId(this.id)">
+            </span>
+            <span class="state">
+              <input id="cont-det-state" type="text" value="São Paulo" placeholder="Estado" onblur="setId(this.id)">
+            </span>
+            <span class="zipcode">
+              <input id="cont-det-zipcode" type="text" value="18055-321" placeholder="CEP" onblur="setId(this.id)">
+            </span>
+            <span class="country">
+              <input id="cont-det-country" type="text" value="Brasil" placeholder="País" onblur="setId(this.id)">
+            </span>
           </div>
           <div class="map"></div>
         </section>
         <section class="notes">
           <span>Notas</span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed condimentum diam. Donec eget consectetur sem.
-          Nullam ac diam et nisi gravida egestas. Quisque ultricies nisi at tortor mattis varius
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed condimentum diam. Donec eget consectetur sem.
-          Nullam ac diam et nisi gravida egestas. Quisque ultricies nisi at tortor mattis varius
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed condimentum diam. Donec eget consectetur sem.
-          Nullam ac diam et nisi gravida egestas. Quisque ultricies nisi at tortor mattis varius
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed condimentum diam. Donec eget consectetur sem.
-          Nullam ac diam et nisi gravida egestas. Quisque ultricies nisi at tortor mattis varius
+          <textarea id="cont-det-notes" cols="32" rows="5" onblur="setId(this.id)"></textarea>
         </section>
+        <section class="keyboard-size"></section>
       </div>
     </main>
-    <div class="keyboard">
+    <div class="keyboard hide">
       <div class="keyboard-container">
       <ul>
         <li>q</li>
