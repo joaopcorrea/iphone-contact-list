@@ -17,7 +17,9 @@
   transition: all .4s ease;
 }
 
-.keyboard.hide {
+.keyboard.hide,
+.keyboard .letters.hide,
+.keyboard .numbers.hide {
   visibility: hidden;
 }
 
@@ -31,6 +33,11 @@
   display: flex;
   justify-content: center;
   margin: 10px 0;
+}
+
+.keyboard .letters.hide,
+.keyboard .numbers.hide {
+  display: none;
 }
 
 .keyboard li {
@@ -74,6 +81,14 @@
   margin-left: 0;
 }
 
+.keyboard.next-key-uppercase li.shift img {
+  filter: invert(34%) sepia(69%) saturate(4514%) hue-rotate(201deg) brightness(103%) contrast(104%);
+}
+
+.keyboard.full-uppercase li.shift img {
+  content: url('../icons/shift-fill.svg');
+}
+
 .keyboard li.back {
   width: 34px;
   margin-left: auto;
@@ -84,12 +99,14 @@
 }
 
 .keyboard li.space {
-  width: 134px
+  width: 134px;
+  text-transform: none !important;
 }
 
 .keyboard li.return {
   width: 78px;
   color: #6b6d71;
+  text-transform: none !important;
 }
 
 .keyboard .gray {
@@ -98,4 +115,9 @@
 
 .keyboard li:active {
   background: #ccc;
+}
+
+.keyboard.next-key-uppercase li,
+.keyboard.full-uppercase li {
+  text-transform: uppercase;
 }
