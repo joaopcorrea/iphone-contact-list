@@ -16,8 +16,7 @@ const entrar = async (event) => {
         sessionStorage.setItem("@user", JSON.stringify(user));
         sessionStorage.setItem("@token", token);
 
-        window.alert("Abriu!");
-        //window.open("#contatos", "_self");
+        window.open("#contatos", "_self");
     } 
     else {
         window.alert("Não abriu!");

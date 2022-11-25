@@ -20,11 +20,11 @@ const sendForm = async (event) => {
     delete obj.numero;
 
     const address = {
-        logradouro: fd.logradouro,
-        cidade: fd.cidade,
-        estado: fd.estado,
-        cep: fd.cep,
-        pais: fd.pais
+        logradouro: fd.get('logradouro'),
+        cidade: fd.get('cidade'),
+        estado: fd.get('estado'),
+        cep: fd.get('cep'),
+        pais: fd.get('pais')
     };
 
     obj.endereco = address;
@@ -37,7 +37,7 @@ const sendForm = async (event) => {
 
     console.log(obj);
 
-    const body = JSON.stringify(obj); 
+    const body = obj;//JSON.stringify(obj); 
 
     const response = await NewContactPost(body);
 

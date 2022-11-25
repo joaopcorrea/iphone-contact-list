@@ -535,9 +535,9 @@ function hmrAcceptRun(bundle, id) {
 var _loginPageJs = require("./js/pages/login.page.js");
 var _signupPageJs = require("./js/pages/signup.page.js");
 var _userUpdatePageJs = require("./js/pages/user-update.page.js");
-// import {AllContacts as Contacts} from './js/pages/contacts.page.js';
+var _contactsPageJs = require("./js/pages/contacts.page.js");
 var _newContactPageJs = require("./js/pages/new-contact.page.js");
-function redirectPages() {
+async function redirectPages() {
     const root = document.getElementById("root");
     const Router = {
         "#login": {
@@ -548,19 +548,26 @@ function redirectPages() {
             component: (0, _signupPageJs.UserSingUpHtml),
             path: "#signup"
         },
-        "#update": {
-            component: (0, _userUpdatePageJs.UserUpdateHtml),
-            path: "#update"
+        "#contatos": {
+            component: (0, _contactsPageJs.AllContacts),
+            path: "#contatos"
         },
-        // '#contacts': { component: Contacts, path: '#contacts' }
-        "#newContact": {
+        "#contato-detalhes": {
+            component: (0, _userUpdatePageJs.UserUpdateHtml),
+            path: "#contat-detalhes"
+        },
+        "#novo-contato": {
             component: (0, _newContactPageJs.NewContactHtml),
-            path: "#newContact"
+            path: "#novo-contato"
+        },
+        "#404": {
+            component: (0, _loginPageJs.LoginHtml),
+            path: "#login"
         }
     };
     const route = Router[window.location.hash] || Router["#404"];
     root.innerHTML = null;
-    root.append(route.component());
+    root.append(await route.component());
     window.history.pushState(null, null, route.path);
 }
 window.addEventListener("load", ()=>{
@@ -568,7 +575,7 @@ window.addEventListener("load", ()=>{
     window.addEventListener("hashchange", redirectPages);
 });
 
-},{"./js/pages/login.page.js":"5sv1E","./js/pages/signup.page.js":"cFsFL","./js/pages/user-update.page.js":"9aywJ","./js/pages/new-contact.page.js":"6LZCj"}],"5sv1E":[function(require,module,exports) {
+},{"./js/pages/login.page.js":"5sv1E","./js/pages/signup.page.js":"cFsFL","./js/pages/user-update.page.js":"9aywJ","./js/pages/new-contact.page.js":"6LZCj","./js/pages/contacts.page.js":"4xvej"}],"5sv1E":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "LoginHtml", ()=>LoginHtml);
@@ -583,8 +590,7 @@ const entrar = async (event)=>{
         const { token , ...user } = response.data;
         sessionStorage.setItem("@user", JSON.stringify(user));
         sessionStorage.setItem("@token", token);
-        window.alert("Abriu!");
-    //window.open("#contatos", "_self");
+        window.open("#contatos", "_self");
     } else window.alert("N\xe3o abriu!");
 };
 const events = ()=>{
@@ -1101,7 +1107,7 @@ const UserUpdateHtml = ()=>{
     return userForm;
 };
 
-},{"compress.js":"gGLmb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../services/user-update.service.js":"bWWtM"}],"bWWtM":[function(require,module,exports) {
+},{"../services/user-update.service.js":"bWWtM","compress.js":"gGLmb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bWWtM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "UserPatch", ()=>UserPatch);
@@ -1141,11 +1147,11 @@ const sendForm = async (event)=>{
     delete obj.tipo;
     delete obj.numero;
     const address = {
-        logradouro: fd.logradouro,
-        cidade: fd.cidade,
-        estado: fd.estado,
-        cep: fd.cep,
-        pais: fd.pais
+        logradouro: fd.get("logradouro"),
+        cidade: fd.get("cidade"),
+        estado: fd.get("estado"),
+        cep: fd.get("cep"),
+        pais: fd.get("pais")
     };
     obj.endereco = address;
     delete obj.logradouro;
@@ -1154,7 +1160,7 @@ const sendForm = async (event)=>{
     delete obj.cep;
     delete obj.pais;
     console.log(obj);
-    const body = JSON.stringify(obj);
+    const body = obj; //JSON.stringify(obj); 
     const response = await (0, _newContactServiceJs.NewContactPost)(body);
     if (response.status === 200) window.alert("Criou!");
     else window.alert("Erro!");
@@ -1200,13 +1206,76 @@ const NewContactPost = (body)=>{
     const token = sessionStorage.getItem("@token");
     const header = new Headers({
         "Content-type": "application/json",
-        "Authorization": token
+        "Authorization": sessionStorage.getItem("@token")
     });
     return fetch(baseUrl + "contact", {
         body,
         header,
         method: "POST"
     });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4xvej":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "AllContacts", ()=>AllContacts);
+var _contactsServiceJs = require("../services/contacts.service.js");
+const searchContacts = document.createElement("form");
+const displayContacts = document.createElement("ul");
+// const search = document.getElementById('search');
+// contact.setAttribute('');
+const header = new Headers();
+const AllContacts = async ()=>{
+    const contatos1 = await (0, _contactsServiceJs.GetAllContacts)();
+    searchContacts.innerHTML = `<input id="search" type="text" name="contact" placeholder="Busque um contato">`;
+    const form = searchContacts.querySelector("#search");
+    // form.addEventListener('change', searchByName);
+    for (let contato of contatos1.data)displayContacts.innerHTML += `<li>
+            <div class="contatos">
+                <img src="${contato.imagem}/>
+                <h1>${contato.nome}</h1>
+                <p class=id">${contato.id}<p>
+            </div>
+        </li>`;
+    const selector = document.querySelectorAll("#contatos");
+    selector.forEach((element)=>{
+        element.addEventListener("click", sendContactDetails);
+    });
+    const id = document.querySelectorAll("#id");
+    id.display = "none";
+    searchContacts.append(displayContacts);
+    return searchContacts;
+};
+function searchByName() {
+    const searchInput = document.querySelector("#search");
+    const filter = searchInput.value.toLowerCase();
+    for (let contato of contatos.data){
+        let text = contato.textContent;
+        if (text.toLowerCase().includes(filter)) contato.display = "";
+        else contato.display = "none";
+    }
+}
+function sendContactDetails() {
+    header.append("id", this.id);
+// window.open(`#contactId`, '_self');
+}
+
+},{"../services/contacts.service.js":"3lRxw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3lRxw":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "GetAllContacts", ()=>GetAllContacts);
+const baseUrl = "http://localhost:5000/v1/";
+const token = sessionStorage.getItem("@token");
+const header = new Headers({
+    "Content-Type": "application/json"
+});
+const GetAllContacts = async ()=>{
+    // header.append('Authorization', token);
+    const response = await fetch(baseUrl + "contact", {
+        header,
+        method: "GET"
+    });
+    return await response.json();
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["6Va53","bsTmd"], "bsTmd", "parcelRequire3532")

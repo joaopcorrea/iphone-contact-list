@@ -5,7 +5,7 @@ export const NewContactPost = (body) => {
 
     const header = new Headers({
         'Content-type': 'application/json',
-        'Authorization': token
+        'Authorization': sessionStorage.getItem("@token")
     });
     
     return fetch(baseUrl + 'contact', {body, header, method: "POST"});
