@@ -10,9 +10,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="./css/iphone.css">
+  <link rel="stylesheet" href="./css/keyboard.css">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/user-reg.css">
+  <link rel="stylesheet" href="./css/pages/contacts.css">
   <script src="./js/script.js"></script>
+  <script src="./js/keyboard.js" defer></script>
   <script src="https://kit.fontawesome.com/5a3233b262.js" crossorigin="anonymous"></script>
   <title>iPhone - Contact List</title>
   <script type="module" src="./bootstrap.js"></script>
@@ -31,21 +34,97 @@
       </span>
     </div>
     <main id="root">
-      <footer>
-        <span class="icon">
-          <img src="./icons/star-fill.svg">
-          Favoritos
-        </span>
-        <span class="icon selected">
-          <img src="./icons/person-crop-circle.svg">
-          Contatos
-        </span>
-        <span class="icon">
-          <img src="./icons/gear.svg">
-          Configuração
-        </span>
-      </footer>
     </main>
+    <div class="keyboard hide">
+      <div class="keyboard-container">
+        <div class="letters">
+          <ul class="key-list">
+            <li>q</li>
+            <li>w</li>
+            <li>e</li>
+            <li>r</li>
+            <li>t</li>
+            <li>y</li>
+            <li>u</li>
+            <li>i</li>
+            <li>o</li>
+            <li>p</li>
+          </ul>
+          <ul class="key-list">
+            <li>a</li>
+            <li>s</li>
+            <li>d</li>
+            <li>f</li>
+            <li>g</li>
+            <li>h</li>
+            <li>j</li>
+            <li>k</li>
+            <li>l</li>
+          </ul>
+          <ul class="key-list">
+            <li class="shift gray"><img src="./icons/shift.svg"></li>
+            <li>z</li>
+            <li>x</li>
+            <li>c</li>
+            <li>v</li>
+            <li>b</li>
+            <li>n</li>
+            <li>m</li>
+            <li class="back gray"><img src="./icons/delete-backward.svg"></li>
+          </ul>
+          <ul>
+            <li class="alt gray"><img src="./icons/textformat-123.svg"></li>
+            <li class="gray"><img src="./icons/globe.svg"></li>
+            <li class="mic"><img src="./icons/mic.svg"></li>
+            <li class="space">space</li>
+            <li class="return gray">return</li>
+          </ul>
+        </div>
+        <div class="numbers hide">
+          <ul class="key-list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>0</li>
+          </ul>
+          <ul class="key-list">
+            <li>/</li>
+            <li>:</li>
+            <li>;</li>
+            <li>(</li>
+            <li>)</li>
+            <li>$</li>
+            <li>&</li>
+            <li>@</li>
+          </ul>
+          <ul class="key-list">
+            <li class="shift gray"><img src="./icons/shift.svg"></li>
+            <li>-</li>
+            <li>.</li>
+            <li>,</li>
+            <li>?</li>
+            <li>!</li>
+            <li>'</li>
+            <li>"</li>
+            <li class="back gray"><img src="./icons/delete-backward.svg"></li>
+          </ul>
+          <ul>
+            <li class="alt gray"><img src="./icons/abc.svg"></li>
+            <li class="gray"><img src="./icons/globe.svg"></li>
+            <li class="mic"><img src="./icons/mic.svg"></li>
+            <li class="space">space</li>
+            <li class="return gray">return</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
   </div>
 </body>
 

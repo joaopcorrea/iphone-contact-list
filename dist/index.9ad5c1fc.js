@@ -1227,14 +1227,17 @@ const displayContacts = document.createElement("ul");
 const header = new Headers();
 const AllContacts = async ()=>{
     const contatos1 = await (0, _contactsServiceJs.GetAllContacts)();
-    searchContacts.innerHTML = `<input id="search" type="text" name="contact" placeholder="Busque um contato">`;
+    const container = document.createElement("div");
+    container.classList.add("container");
+    container.innerHTML = `
+        <header class="contacts">Contacts <button>+</button></header>
+        <input id="search" type="text" name="contact" placeholder="Busque um contato">
+        `;
     const form = searchContacts.querySelector("#search");
     // form.addEventListener('change', searchByName);
     for (let contato of contatos1.data)displayContacts.innerHTML += `<li>
             <div class="contatos">
-                <img src="${contato.imagem}/>
-                <h1>${contato.nome}</h1>
-                <p class=id">${contato.id}<p>
+                <h3>${contato.nome}</h1>
             </div>
         </li>`;
     const selector = document.querySelectorAll("#contatos");
@@ -1243,8 +1246,23 @@ const AllContacts = async ()=>{
     });
     const id = document.querySelectorAll("#id");
     id.display = "none";
-    searchContacts.append(displayContacts);
-    return searchContacts;
+    container.append(displayContacts);
+    container.innerHTML += `<section class="keyboard-size"></section>`;
+    container.innerHTML += `<footer>
+    <span class="icon">
+      <img src="./icons/star-fill.svg">
+      Favoritos
+    </span>
+    <span class="icon selected">
+      <img src="./icons/person-crop-circle.svg">
+      Contatos
+    </span>
+    <span class="icon">
+      <img src="./icons/gear.svg">
+      Configuração
+    </span>
+  </footer>`;
+    return container;
 };
 function searchByName() {
     const searchInput = document.querySelector("#search");

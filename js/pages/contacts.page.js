@@ -9,8 +9,14 @@ const header = new Headers();
 export const AllContacts = async () => {
     const contatos = await GetAllContacts();
 
-    searchContacts.innerHTML = (
-        `<input id="search" type="text" name="contact" placeholder="Busque um contato">`
+    const container = document.createElement('div');
+    container.classList.add('container');
+
+    container.innerHTML = (
+        `
+        <header class="contacts">Contacts <button>+</button></header>
+        <input id="search" type="text" name="contact" placeholder="Busque um contato">
+        `
         );
 
     const form = searchContacts.querySelector('#search');
@@ -20,9 +26,7 @@ export const AllContacts = async () => {
     displayContacts.innerHTML += (
         `<li>
             <div class="contatos">
-                <img src="${contato.imagem}/>
-                <h1>${contato.nome}</h1>
-                <p class=id">${contato.id}<p>
+                <h3>${contato.nome}</h1>
             </div>
         </li>`
         );
@@ -38,8 +42,23 @@ export const AllContacts = async () => {
 
     id.display='none';
 
-    searchContacts.append(displayContacts);
-    return searchContacts;
+    container.append(displayContacts);
+    container.innerHTML += `<section class="keyboard-size"></section>`;
+    container.innerHTML += `<footer>
+    <span class="icon">
+      <img src="./icons/star-fill.svg">
+      Favoritos
+    </span>
+    <span class="icon selected">
+      <img src="./icons/person-crop-circle.svg">
+      Contatos
+    </span>
+    <span class="icon">
+      <img src="./icons/gear.svg">
+      Configuração
+    </span>
+  </footer>`;
+    return container;
 }
 
 function searchByName() {

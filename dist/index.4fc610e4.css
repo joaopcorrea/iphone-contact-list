@@ -8,6 +8,19 @@ body {
 }
 
 .iphone {
+  background: #f2f2f7;
+}
+
+.container {
+  color: #131313;
+  height: 100%;
+  width: calc(100% - 3px);
+  border-radius: 40px;
+  padding: 0 10px;
+  overflow-y: scroll;
+}
+
+.iphone {
   --unit: 100vh;
   width: 360px;
   height: 780px;
