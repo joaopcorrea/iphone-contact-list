@@ -11,12 +11,21 @@ async function redirectPages() {
         '#login': { component: LoginHtml, path: '#login' },
         '#signup': { component: UserSingUpHtml, path: '#signup' },
         '#contatos': { component: Contacts, path: '#contatos' },
-        '#contato-detalhes': { component: UserUpdateHtml, path: '#contat-detalhes' },
+        '#contato-detalhes': { component: () => {window.location.href = './contact-details.html#0'}, path: '#contato-detalhes' },
         '#novo-contato': { component: NewContactHtml, path: '#novo-contato' },
+        '#0': { component: () => {}, path: ''},
         '#404': { component: LoginHtml, path: '#login' },
     }
 
-    const route = Router[window.location.hash] || Router['#404']
+    if (window.location.hash === '#0') return;
+
+    const route = Router[window.location.hash.split('?id=')[0]] || Router['#404']
+
+    let id = window.location.hash.split('?id=')[1];
+    if (id) {
+        sessionStorage.setItem("@id", id);
+    }
+    
 
     root.innerHTML = null;
     root.append(await route.component());

@@ -54,8 +54,10 @@ const addNumber = () => {
 
 };
 
+
 const events = () => {
     createContact.addEventListener('submit', sendForm);
+    // createContact.addEventListener('click', );
 
     // const addNumberButton = document.getElementById('btn-add-number');
     // addNumberButton.addEventListener('click', addNumber);
@@ -64,7 +66,10 @@ const events = () => {
 
 export const NewContactHtml = () => {
     createContact.innerHTML = (
-        `<input type="text" name="nome" placeholder="Nome do Contato"/>
+        `
+        <a href='#contatos'>Voltar</a>
+        
+        <input type="text" name="nome" placeholder="Nome do Contato"/>
         <input type="text" name="apelido" placeholder="Apelido"/>
 
         <input type="text" name="tipo" placeholder="Tipo"/>

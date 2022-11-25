@@ -6,6 +6,24 @@ const displayContacts = document.createElement('ul');
 // contact.setAttribute('');
 const header = new Headers();
 
+
+const events = () => {
+    displayContacts.addEventListener('click', handleClick);
+    // createContact.addEventListener('click', );
+
+    // const addNumberButton = document.getElementById('btn-add-number');
+    // addNumberButton.addEventListener('click', addNumber);
+    // createContact.addEventListener('submit', sendForm);    
+};
+
+const handleClick = (event) => {
+    console.log(event.target);
+}
+
+function deleta() {
+    console.log('deletado');
+  }
+
 export const AllContacts = async () => {
     const contatos = await GetAllContacts();
 
@@ -14,7 +32,7 @@ export const AllContacts = async () => {
 
     container.innerHTML = (
         `
-        <header class="contacts">Contacts <button>+</button></header>
+        <header class="contacts">Contacts <a href='#novo-contato'>+</a></header>
         <input id="search" type="text" name="contact" placeholder="Busque um contato">
         `
         );
@@ -22,15 +40,22 @@ export const AllContacts = async () => {
     const form = searchContacts.querySelector('#search');
     // form.addEventListener('change', searchByName);
 
+    displayContacts.innerHTML = '';
+
     for (let contato of contatos.data) {
     displayContacts.innerHTML += (
-        `<li>
+        `<li >
             <div class="contatos">
                 <h3>${contato.nome}</h1>
+                <a href="#contato-detalhes?id=${contato.id}">Editar</a>
+                <button id='delete'>X</button>
             </div>
         </li>`
         );
     };
+
+    const deleteButton = displayContacts.querySelector('#delete');
+    deleteButton.addEventListener('click', deleta);
 
     const selector = document.querySelectorAll('#contatos');
 
@@ -58,6 +83,9 @@ export const AllContacts = async () => {
       Configuração
     </span>
   </footer>`;
+
+    events();
+
     return container;
 }
 
@@ -76,7 +104,7 @@ function searchByName() {
     }
 };
 
-function sendContactDetails() {
-    header.append('id', this.id);
-    // window.open(`#contactId`, '_self');
+function sendContactDetails(id) {
+    header.append('id', id);
+    window.open(`#contato-detalhes`, '_self');
 };

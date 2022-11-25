@@ -6,12 +6,13 @@ header.contacts {
   align-items: center;
 }
 
-header.contacts button {
+header.contacts a {
   margin-left: auto;
   color: #0079ff;
   font-size: 2em;
   border: none;
   background-color: transparent;
+  text-decoration: none;
 }
 
 input#search {

@@ -31,7 +31,7 @@ window.addEventListener('click', (event) => {
   else {
     // keyboardSize.style.marginBottom = '0';
     keyboard.classList.add('hide');
-    console.log(event.target.querySelector('.keyboard'));
+    // console.log(event.target.querySelector('.keyboard'));
   }
 })
 

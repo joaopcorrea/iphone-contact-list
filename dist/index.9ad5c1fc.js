@@ -553,19 +553,28 @@ async function redirectPages() {
             path: "#contatos"
         },
         "#contato-detalhes": {
-            component: (0, _userUpdatePageJs.UserUpdateHtml),
-            path: "#contat-detalhes"
+            component: ()=>{
+                window.location.href = "./contact-details.html#0";
+            },
+            path: "#contato-detalhes"
         },
         "#novo-contato": {
             component: (0, _newContactPageJs.NewContactHtml),
             path: "#novo-contato"
+        },
+        "#0": {
+            component: ()=>{},
+            path: ""
         },
         "#404": {
             component: (0, _loginPageJs.LoginHtml),
             path: "#login"
         }
     };
-    const route = Router[window.location.hash] || Router["#404"];
+    if (window.location.hash === "#0") return;
+    const route = Router[window.location.hash.split("?id=")[0]] || Router["#404"];
+    let id = window.location.hash.split("?id=")[1];
+    if (id) sessionStorage.setItem("@id", id);
     root.innerHTML = null;
     root.append(await route.component());
     window.history.pushState(null, null, route.path);
@@ -1169,12 +1178,16 @@ const sendForm = async (event)=>{
 const addNumber = ()=>{};
 const events = ()=>{
     createContact.addEventListener("submit", sendForm);
+// createContact.addEventListener('click', );
 // const addNumberButton = document.getElementById('btn-add-number');
 // addNumberButton.addEventListener('click', addNumber);
 // createContact.addEventListener('submit', sendForm);    
 };
 const NewContactHtml = ()=>{
-    createContact.innerHTML = `<input type="text" name="nome" placeholder="Nome do Contato"/>
+    createContact.innerHTML = `
+        <a href='#contatos'>Voltar</a>
+        
+        <input type="text" name="nome" placeholder="Nome do Contato"/>
         <input type="text" name="apelido" placeholder="Apelido"/>
 
         <input type="text" name="tipo" placeholder="Tipo"/>
@@ -1225,21 +1238,39 @@ const displayContacts = document.createElement("ul");
 // const search = document.getElementById('search');
 // contact.setAttribute('');
 const header = new Headers();
+const events = ()=>{
+    displayContacts.addEventListener("click", handleClick);
+// createContact.addEventListener('click', );
+// const addNumberButton = document.getElementById('btn-add-number');
+// addNumberButton.addEventListener('click', addNumber);
+// createContact.addEventListener('submit', sendForm);    
+};
+const handleClick = (event)=>{
+    console.log(event.target);
+};
+function deleta() {
+    console.log("deletado");
+}
 const AllContacts = async ()=>{
     const contatos1 = await (0, _contactsServiceJs.GetAllContacts)();
     const container = document.createElement("div");
     container.classList.add("container");
     container.innerHTML = `
-        <header class="contacts">Contacts <button>+</button></header>
+        <header class="contacts">Contacts <a href='#novo-contato'>+</a></header>
         <input id="search" type="text" name="contact" placeholder="Busque um contato">
         `;
     const form = searchContacts.querySelector("#search");
     // form.addEventListener('change', searchByName);
-    for (let contato of contatos1.data)displayContacts.innerHTML += `<li>
+    displayContacts.innerHTML = "";
+    for (let contato of contatos1.data)displayContacts.innerHTML += `<li >
             <div class="contatos">
                 <h3>${contato.nome}</h1>
+                <a href="#contato-detalhes?id=${contato.id}">Editar</a>
+                <button id='delete'>X</button>
             </div>
         </li>`;
+    const deleteButton = displayContacts.querySelector("#delete");
+    deleteButton.addEventListener("click", deleta);
     const selector = document.querySelectorAll("#contatos");
     selector.forEach((element)=>{
         element.addEventListener("click", sendContactDetails);
@@ -1262,6 +1293,7 @@ const AllContacts = async ()=>{
       Configuração
     </span>
   </footer>`;
+    events();
     return container;
 };
 function searchByName() {
@@ -1273,9 +1305,9 @@ function searchByName() {
         else contato.display = "none";
     }
 }
-function sendContactDetails() {
-    header.append("id", this.id);
-// window.open(`#contactId`, '_self');
+function sendContactDetails(id) {
+    header.append("id", id);
+    window.open(`#contato-detalhes`, "_self");
 }
 
 },{"../services/contacts.service.js":"3lRxw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3lRxw":[function(require,module,exports) {
