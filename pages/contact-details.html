@@ -10,10 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../css/iphone.css">
-  <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/keyboard.css">
   <link rel="stylesheet" href="../css/contact-details.css">
-  <script src="../js/script.js" defer></script>
+  <script src="../js/keyboard.js" defer></script>
+  <script type="module" src="../js/contact-details.js" defer></script>
   <title>iPhone - Contact List</title>
 </head>
 
@@ -31,64 +31,66 @@
     </div>
     <main>
       <div class="container">
-        <header>
-          <a class="blue-text" href="#"><img class="blue-icon" src="../icons/chevron-backward.svg"> Contatos</a>
-          <button class="blue-text">Edit</button>
-        </header>
-        <section class="profile">
-          <span class="picture">JP</span>
-          <h1 class="name">João Pedro</h1>
-          <h3 class="nickname">Pedrinho</h3>
-        </section>
-        <section class="options">
-          <div class="icon"><img src="../icons/bubble-left-fill.svg"> mensagem</div>
-          <div class="icon"><img src="../icons/phone-fill.svg"> celular</div>
-          <div class="icon"><img src="../icons/facetime.svg"> FaceTime</div>
-          <div class="icon"><img src="../icons/mail.svg"> e-mail</div>
-          <div class="icon"><img src="../icons/dollar.svg"> pagamento</div>
-        </section>
-        <section class="phone-list">
-          <div class="phone">
-            <span>celular</span>
-            <input id="cont-det-phone1" type="text" value="(15) 99302-5531" placeholder="(xx) xxxxx-xxxx"
-              onblur="setId(this.id)">
-          </div>
-          <div class="phone">
-            <span>casa</span>
-            <input id="cont-det-phone2" type="text" value="(15) 99302-5531" placeholder="(xx) xxxxx-xxxx"
-              onblur="setId(this.id)">
-          </div>
-        </section>
-        <section class="email blue-text">
-          <span>e-mail</span>
-          <input id="cont-det-email" type="text" value="joaopedrocorrea21@gmail.com" placeholder="email@email.com"
-            onblur="setId(this.id)">
-        </section>
-        <section class="address">
-          <div class="info">
-            <span class="street">
-              <input id="cont-det-street" type="text" value="Samuel Steinberg 144" placeholder="Logradouro"
+        <form>
+          <header>
+            <a class="blue-text" href="#"><img class="blue-icon" src="../icons/chevron-backward.svg"> Contatos</a>
+            <button class="blue-text">Salvar</button>
+          </header>
+          <section class="profile">
+            <span class="picture">JP</span>
+            <h1 class="name">João Pedro</h1>
+            <h3 class="nickname">Pedrinho</h3>
+          </section>
+          <section class="options">
+            <div class="icon"><img src="../icons/bubble-left-fill.svg"> mensagem</div>
+            <div class="icon"><img src="../icons/phone-fill.svg"> celular</div>
+            <div class="icon"><img src="../icons/facetime.svg"> FaceTime</div>
+            <div class="icon"><img src="../icons/mail.svg"> e-mail</div>
+            <div class="icon"><img src="../icons/dollar.svg"> pagamento</div>
+          </section>
+          <section class="phone-list">
+            <div class="phone">
+              <span>celular</span>
+              <input id="cont-det-phone1" type="text" value="(15) 99302-5531" placeholder="(xx) xxxxx-xxxx"
                 onblur="setId(this.id)">
-            </span>
-            <span class="city">
-              <input id="cont-det-city" type="text" value="Sorocaba" placeholder="Cidade" onblur="setId(this.id)">
-            </span>
-            <span class="state">
-              <input id="cont-det-state" type="text" value="São Paulo" placeholder="Estado" onblur="setId(this.id)">
-            </span>
-            <span class="zipcode">
-              <input id="cont-det-zipcode" type="text" value="18055-321" placeholder="CEP" onblur="setId(this.id)">
-            </span>
-            <span class="country">
-              <input id="cont-det-country" type="text" value="Brasil" placeholder="País" onblur="setId(this.id)">
-            </span>
-          </div>
-          <div class="map"></div>
-        </section>
-        <section class="notes">
-          <span>Notas</span>
-          <textarea id="cont-det-notes" cols="32" rows="5" onblur="setId(this.id)"></textarea>
-        </section>
+            </div>
+            <div class="phone">
+              <span>casa</span>
+              <input id="cont-det-phone2" type="text" value="(15) 99302-5531" placeholder="(xx) xxxxx-xxxx"
+                onblur="setId(this.id)">
+            </div>
+          </section>
+          <section class="email blue-text">
+            <span>e-mail</span>
+            <input id="cont-det-email" type="text" value="joaopedrocorrea21@gmail.com" placeholder="email@email.com"
+              onblur="setId(this.id)">
+          </section>
+          <section class="address">
+            <div class="info">
+              <span class="street">
+                <input id="cont-det-street" type="text" value="Samuel Steinberg 144" placeholder="Logradouro"
+                  onblur="setId(this.id)">
+              </span>
+              <span class="city">
+                <input id="cont-det-city" type="text" value="Sorocaba" placeholder="Cidade" onblur="setId(this.id)">
+              </span>
+              <span class="state">
+                <input id="cont-det-state" type="text" value="São Paulo" placeholder="Estado" onblur="setId(this.id)">
+              </span>
+              <span class="zipcode">
+                <input id="cont-det-zipcode" type="text" value="18055-321" placeholder="CEP" onblur="setId(this.id)">
+              </span>
+              <span class="country">
+                <input id="cont-det-country" type="text" value="Brasil" placeholder="País" onblur="setId(this.id)">
+              </span>
+            </div>
+            <div class="map"></div>
+          </section>
+          <section class="notes">
+            <span>Notas</span>
+            <textarea id="cont-det-notes" cols="32" rows="5" onblur="setId(this.id)"></textarea>
+          </section>
+        </form>
         <section class="keyboard-size"></section>
       </div>
     </main>
@@ -139,47 +141,47 @@
         </div>
         <div class="numbers hide">
           <ul class="key-list">
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-          <li>5</li>
-          <li>6</li>
-          <li>7</li>
-          <li>8</li>
-          <li>9</li>
-          <li>0</li>
-        </ul>
-        <ul class="key-list">
-          <li>/</li>
-          <li>:</li>
-          <li>;</li>
-          <li>(</li>
-          <li>)</li>
-          <li>$</li>
-          <li>&</li>
-          <li>@</li>
-        </ul>
-        <ul class="key-list">
-          <li class="shift gray"><img src="../icons/shift.svg"></li>
-          <li>-</li>
-          <li>.</li>
-          <li>,</li>
-          <li>?</li>
-          <li>!</li>
-          <li>'</li>
-          <li>"</li>
-          <li class="back gray"><img src="../icons/delete-backward.svg"></li>
-        </ul>
-        <ul>
-          <li class="alt gray"><img src="../icons/abc.svg"></li>
-          <li class="gray"><img src="../icons/globe.svg"></li>
-          <li class="mic"><img src="../icons/mic.svg"></li>
-          <li class="space">space</li>
-          <li class="return gray">return</li>
-        </ul>
-      </div>
-        
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>0</li>
+          </ul>
+          <ul class="key-list">
+            <li>/</li>
+            <li>:</li>
+            <li>;</li>
+            <li>(</li>
+            <li>)</li>
+            <li>$</li>
+            <li>&</li>
+            <li>@</li>
+          </ul>
+          <ul class="key-list">
+            <li class="shift gray"><img src="../icons/shift.svg"></li>
+            <li>-</li>
+            <li>.</li>
+            <li>,</li>
+            <li>?</li>
+            <li>!</li>
+            <li>'</li>
+            <li>"</li>
+            <li class="back gray"><img src="../icons/delete-backward.svg"></li>
+          </ul>
+          <ul>
+            <li class="alt gray"><img src="../icons/abc.svg"></li>
+            <li class="gray"><img src="../icons/globe.svg"></li>
+            <li class="mic"><img src="../icons/mic.svg"></li>
+            <li class="space">space</li>
+            <li class="return gray">return</li>
+          </ul>
+        </div>
+
       </div>
     </div>
   </div>

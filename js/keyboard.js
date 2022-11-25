@@ -1,14 +1,8 @@
 const keyboard = document.querySelector('.keyboard');
-const btnEdit = document.querySelector('header button');
 const container = document.querySelector('main .container');
 const keyboardSize = document.querySelector('.container .keyboard-size');
 
 var cur_id;
-
-btnEdit.onclick = () => {
-  keyboard.classList.toggle('hide');
-  console.log('uepa');
-}
 
 window.addEventListener('click', (event) => {
   if (event.target.tagName === 'INPUT' ||
