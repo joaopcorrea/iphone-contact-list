@@ -2,7 +2,7 @@ import { UserSingUpPost } from "../services/signup.service.js";
 import Compress from "compress.js";
 
 const userForm = document.createElement('form');
-userForm.setAttribute('id', 'p-user');
+userForm.setAttribute('id', 'p-user-signup');
 
 const photoRecoveringAndResizing = async () => {
     return new Promise((resolve, reject) => {
@@ -37,10 +37,10 @@ const userRegistration = async (event) => {
 
     if (response.status == 200) {
         window.alert('Usuário cadastrado!');
-        // window.open('#login', '_self');
+        window.open('#login', '_self');
     }
     else if (response.status == 409) window.alert('Erro! Usuário já cadastrado.');
-    else window.alert('Erro');
+    else window.alert('Erro!');
 
     const json = await response.json();
 };
@@ -56,7 +56,9 @@ export const UserSingUpHtml = () => {
     <input type="text" name="nome" placeholder="Nome de usuário" required>
     <input type="file" accept="image/*" name="foto" placeholder="Foto">
 
-    <button type="submit" class="btn-user-reg">Cadastrar meu usuário</button>`
+    <button type="submit" class="btn-user-reg">Cadastrar meu usuário</button>
+
+    <p><a href="#login" target="_self">Já possui conta? Faça o login!</a></p>`
     );
 
     events();

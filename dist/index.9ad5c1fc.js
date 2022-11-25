@@ -532,18 +532,30 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"bsTmd":[function(require,module,exports) {
+var _loginPageJs = require("./js/pages/login.page.js");
 var _signupPageJs = require("./js/pages/signup.page.js");
-var _updatePageJs = require("./js/pages/update.page.js");
+var _userUpdatePageJs = require("./js/pages/user-update.page.js");
+// import {AllContacts as Contacts} from './js/pages/contacts.page.js';
+var _newContactPageJs = require("./js/pages/new-contact.page.js");
 function redirectPages() {
     const root = document.getElementById("root");
     const Router = {
+        "#login": {
+            component: (0, _loginPageJs.LoginHtml),
+            path: "#login"
+        },
         "#signup": {
             component: (0, _signupPageJs.UserSingUpHtml),
             path: "#signup"
         },
         "#update": {
-            component: (0, _updatePageJs.UserUpdateHtml),
+            component: (0, _userUpdatePageJs.UserUpdateHtml),
             path: "#update"
+        },
+        // '#contacts': { component: Contacts, path: '#contacts' }
+        "#newContact": {
+            component: (0, _newContactPageJs.NewContactHtml),
+            path: "#newContact"
         }
     };
     const route = Router[window.location.hash] || Router["#404"];
@@ -556,7 +568,88 @@ window.addEventListener("load", ()=>{
     window.addEventListener("hashchange", redirectPages);
 });
 
-},{"./js/pages/signup.page.js":"cFsFL","./js/pages/update.page.js":"dmf3c"}],"cFsFL":[function(require,module,exports) {
+},{"./js/pages/login.page.js":"5sv1E","./js/pages/signup.page.js":"cFsFL","./js/pages/user-update.page.js":"9aywJ","./js/pages/new-contact.page.js":"6LZCj"}],"5sv1E":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "LoginHtml", ()=>LoginHtml);
+var _loginServiceJs = require("../services/login.service.js");
+const login = document.createElement("form");
+login.setAttribute("id", "p-login");
+const entrar = async (event)=>{
+    event.preventDefault();
+    const fd = new FormData(login);
+    const response = await (0, _loginServiceJs.AuthPost)(fd);
+    if (response.status === 200) {
+        const { token , ...user } = response.data;
+        sessionStorage.setItem("@user", JSON.stringify(user));
+        sessionStorage.setItem("@token", token);
+        window.alert("Abriu!");
+    //window.open("#contatos", "_self");
+    } else window.alert("N\xe3o abriu!");
+};
+const events = ()=>{
+    login.addEventListener("submit", entrar);
+};
+const LoginHtml = ()=>{
+    login.innerHTML = `<input type="email" name="email" placeholder="Usuário">
+    <input type="password" name="senha" placeholder="Senha">
+
+    <button>Login</button>
+    
+    <p><a href="#signup" target="_self">Não possui conta? Cadastre-se!</a></p>`;
+    events();
+    return login;
+};
+
+},{"../services/login.service.js":"80rfz","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"80rfz":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "AuthPost", ()=>AuthPost);
+const baseUrl = "http://localhost:5000/v1/";
+const headers = new Headers();
+headers.append("Content-Type", "application/json");
+const AuthPost = async (formData)=>{
+    const obj = Object.fromEntries(formData);
+    const body = JSON.stringify(obj);
+    const response = await fetch(baseUrl + "auth", {
+        body,
+        headers,
+        method: "POST"
+    });
+    return await response.json();
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"cFsFL":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "UserSingUpHtml", ()=>UserSingUpHtml);
@@ -564,7 +657,7 @@ var _signupServiceJs = require("../services/signup.service.js");
 var _compressJs = require("compress.js");
 var _compressJsDefault = parcelHelpers.interopDefault(_compressJs);
 const userForm = document.createElement("form");
-userForm.setAttribute("id", "p-user");
+userForm.setAttribute("id", "p-user-signup");
 const photoRecoveringAndResizing = async ()=>{
     return new Promise((resolve, reject)=>{
         const compress = new (0, _compressJsDefault.default)();
@@ -589,9 +682,11 @@ const userRegistration = async (event)=>{
     const photo = await photoRecoveringAndResizing();
     if (photo) fd.append("foto", photo.data);
     const response = await (0, _signupServiceJs.UserSingUpPost)(fd);
-    if (response.status == 200) window.alert("Usu\xe1rio cadastrado!");
-    else if (response.status == 409) window.alert("Erro! Usu\xe1rio j\xe1 cadastrado.");
-    else window.alert("Erro");
+    if (response.status == 200) {
+        window.alert("Usu\xe1rio cadastrado!");
+        window.open("#login", "_self");
+    } else if (response.status == 409) window.alert("Erro! Usu\xe1rio j\xe1 cadastrado.");
+    else window.alert("Erro!");
     const json = await response.json();
 };
 const events = ()=>{
@@ -603,12 +698,30 @@ const UserSingUpHtml = ()=>{
     <input type="text" name="nome" placeholder="Nome de usuário" required>
     <input type="file" accept="image/*" name="foto" placeholder="Foto">
 
-    <button type="submit" class="btn-user-reg">Cadastrar meu usuário</button>`;
+    <button type="submit" class="btn-user-reg">Cadastrar meu usuário</button>
+
+    <p><a href="#login" target="_self">Já possui conta? Faça o login!</a></p>`;
     events();
     return userForm;
 };
 
-},{"compress.js":"gGLmb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../services/signup.service.js":"6TggS"}],"gGLmb":[function(require,module,exports) {
+},{"../services/signup.service.js":"6TggS","compress.js":"gGLmb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6TggS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "UserSingUpPost", ()=>UserSingUpPost);
+const baseUrl = "http://localhost:5000/v1/";
+const headers = new Headers();
+headers.append("Content-type", "application/json");
+const UserSingUpPost = (formData)=>{
+    const body = JSON.stringify(Object.fromEntries(formData));
+    return fetch(baseUrl + "user", {
+        body,
+        headers,
+        method: "POST"
+    });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gGLmb":[function(require,module,exports) {
 // Support regenerator-runtime globally.
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -727,37 +840,7 @@ exports.default = {
     prefix
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"5Ehsy":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5Ehsy":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 const base64ToFile = (base64, mime = "image/jpeg")=>{
@@ -963,31 +1046,15 @@ exports.default = {
     orientation
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6TggS":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "UserSingUpPost", ()=>UserSingUpPost);
-const baseUrl = "http://localhost:5000/v1/";
-const headers = new Headers();
-headers.append("Content-type", "application/json");
-const UserSingUpPost = (formData)=>{
-    const body = JSON.stringify(Object.fromEntries(formData));
-    return fetch(baseUrl + "user", {
-        body,
-        headers,
-        method: "POST"
-    });
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dmf3c":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9aywJ":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "UserUpdateHtml", ()=>UserUpdateHtml);
-var _updateServiceJs = require("../services/update.service.js");
+var _userUpdateServiceJs = require("../services/user-update.service.js");
 var _compressJs = require("compress.js");
 var _compressJsDefault = parcelHelpers.interopDefault(_compressJs);
 const userForm = document.createElement("form");
-userForm.setAttribute("id", "p-user");
+userForm.setAttribute("id", "p-user-update");
 const photoRecoveringAndResizing = async ()=>{
     return new Promise((resolve, reject)=>{
         const compress = new (0, _compressJsDefault.default)();
@@ -1011,34 +1078,38 @@ const userUpdate = async (event)=>{
     const fd = new FormData(userForm);
     const photo = await photoRecoveringAndResizing();
     if (photo) fd.append("foto", photo.data);
-    const response = await (0, _updateServiceJs.UserPatch)(fd);
+    const response = await (0, _userUpdateServiceJs.UserPatch)(fd);
     if (response.status == 200) window.alert("Informa\xe7\xf5es alteradas com sucesso!");
     else if (response.status == 404) window.alert("Erro! Usu\xe1rio n\xe3o encontrado.");
-    else window.alert("Erro");
+    else window.alert("Erro!");
     const json = await response.json();
 };
+// const filler = () => {
+//     document.getElementById('user-email').value = sessionStorage.getItem('@user').email;
+// };
 const events = ()=>{
     userForm.addEventListener("submit", userUpdate);
 };
 const UserUpdateHtml = ()=>{
-    userForm.innerHTML = `<input type="text" name="email" placeholder="E-mail">
-    <input type="password" name="senha" placeholder="Senha">
-    <input type="text" name="nome" placeholder="Nome de usuário">
-    <input type="file" accept="image/*" name="foto" placeholder="Foto">
+    userForm.innerHTML = `<input type="text" name="email" id="user-email">
+    <input type="password" name="senha">
+    <input type="text" name="nome">
+    <input type="file" accept="image/*" name="foto">
 
-    <button type="submit" class="btn-user-reg">Cadastrar meu usuário</button>`;
+    <button type="submit" class="btn-user-reg">Salvar alterações</button>`;
     events();
     return userForm;
 };
 
-},{"../services/update.service.js":"kEkn6","compress.js":"gGLmb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kEkn6":[function(require,module,exports) {
+},{"compress.js":"gGLmb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../services/user-update.service.js":"bWWtM"}],"bWWtM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "UserPatch", ()=>UserPatch);
 const baseUrl = "http://localhost:5000/v1/";
+const token = sessionStorage.getItem("@token");
 const headers = new Headers({
     "Content-type": "application/json",
-    "Authorization": ""
+    "Authorization": token
 });
 const UserPatch = (formData)=>{
     const body = JSON.stringify(Object.fromEntries(formData));
@@ -1046,6 +1117,95 @@ const UserPatch = (formData)=>{
         body,
         headers,
         method: "PATCH"
+    });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6LZCj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "NewContactHtml", ()=>NewContactHtml);
+var _newContactServiceJs = require("../services/new-contact.service.js");
+const createContact = document.createElement("form");
+createContact.setAttribute("id", "p-new-contact");
+const sendForm = async (event)=>{
+    event.preventDefault();
+    const fd = new FormData(createContact);
+    const type = fd.getAll("tipo");
+    const number = fd.getAll("numero");
+    const phones = type.map((type, i)=>({
+            tipo: type,
+            numero: number[i]
+        }));
+    const obj = Object.fromEntries(fd);
+    obj.telefones = phones;
+    delete obj.tipo;
+    delete obj.numero;
+    const address = {
+        logradouro: fd.logradouro,
+        cidade: fd.cidade,
+        estado: fd.estado,
+        cep: fd.cep,
+        pais: fd.pais
+    };
+    obj.endereco = address;
+    delete obj.logradouro;
+    delete obj.cidade;
+    delete obj.estado;
+    delete obj.cep;
+    delete obj.pais;
+    console.log(obj);
+    const body = JSON.stringify(obj);
+    const response = await (0, _newContactServiceJs.NewContactPost)(body);
+    if (response.status === 200) window.alert("Criou!");
+    else window.alert("Erro!");
+    const json = await response.json();
+};
+const addNumber = ()=>{};
+const events = ()=>{
+    createContact.addEventListener("submit", sendForm);
+// const addNumberButton = document.getElementById('btn-add-number');
+// addNumberButton.addEventListener('click', addNumber);
+// createContact.addEventListener('submit', sendForm);    
+};
+const NewContactHtml = ()=>{
+    createContact.innerHTML = `<input type="text" name="nome" placeholder="Nome do Contato"/>
+        <input type="text" name="apelido" placeholder="Apelido"/>
+
+        <input type="text" name="tipo" placeholder="Tipo"/>
+        <input type="text" name="numero" placeholder="Telefone"/>
+        <input type="text" name="tipo" placeholder="Tipo"/>
+        <input type="text" name="numero" placeholder="Telefone"/>
+
+        <input type="text" name="email" placeholder="E-mail"/>
+        <input type="text" name="notas" palceholder="Notas"/>
+        <input type="text" name="foto" placeholder="Insira uma imagem"/>
+
+        <input type="text" name="logradouro" placeholder="Logradouro"/>
+        <input type="text" name="cidade" placeholder="Cidade"/>
+        <input type="text" name="estado" placeholder="Estado"/>
+        <input type="text" name="cep" placeholder="CEP"/>
+        <input type="text" name="pais" placeholder="País"/>
+
+        <button type="submit">Criar novo contato</button>`;
+    events();
+    return createContact;
+};
+
+},{"../services/new-contact.service.js":"kluQu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kluQu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "NewContactPost", ()=>NewContactPost);
+const baseUrl = "http://localhost:5000/v1/";
+const NewContactPost = (body)=>{
+    const token = sessionStorage.getItem("@token");
+    const header = new Headers({
+        "Content-type": "application/json",
+        "Authorization": token
+    });
+    return fetch(baseUrl + "contact", {
+        body,
+        header,
+        method: "POST"
     });
 };
 
