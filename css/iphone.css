@@ -9,6 +9,19 @@ body {
 }
 
 .iphone {
+  background: #f2f2f7;
+}
+
+.container {
+  padding: 0 10px;
+  color: #131313;
+  height: calc(100%);
+  border-radius: 40px;
+  width: calc(100% - 3px);
+  overflow-y: scroll;
+}
+
+.iphone {
   --unit: 100vh;
   position: relative;
   margin: 40px auto;

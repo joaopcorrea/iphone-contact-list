@@ -1,0 +1,39 @@
+main {
+  align-items: center;
+  display: flex;
+}
+
+.user-reg {
+  width: 100%;
+  box-sizing: border-box;
+  gap: 20px;
+  padding: 20px;
+  display: block;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 32px;
+  background-color: #0000;
+  border-top: hidden;
+  border-left: hidden;
+  border-right: hidden;
+  margin: 20px 0;
+  display: block;
+}
+
+.btn-user-reg {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 40px;
+  color: #fff;
+  background-color: #e52f72;
+  border: hidden;
+  border-radius: 10px;
+  margin: 40px 0;
+  font-weight: bold;
+  display: block;
+}
+
+/*# sourceMappingURL=index.e4c92a40.css.map */
